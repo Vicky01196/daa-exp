@@ -1,0 +1,17 @@
+def findSubstrings(words):
+    substrings = set()
+    
+    # Iterate through each word
+    for i in range(len(words)):
+        # Compare the current word with every other word
+        for j in range(len(words)):
+            # Skip comparison with itself
+            if i != j and words[i] in words[j]:
+                substrings.add(words[i])
+    
+    return list(substrings)
+
+# Test cases
+print(findSubstrings(["mass", "as", "hero", "superhero"]))  # Output: ["as", "hero"]
+print(findSubstrings(["leetcode", "et", "code"]))           # Output: ["et", "code"]
+print(findSubstrings(["blue", "green", "bu"]))              # Output: []
