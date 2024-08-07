@@ -1,0 +1,39 @@
+def orientation(p, q, r):
+    """Calculate the orientation of the triplet (p, q, r).
+    Returns:
+      0 if collinear,
+      1 if clockwise,
+      2 if counterclockwise
+    """
+    val = (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1])
+    if val == 0:
+        return 0
+    return 1 if val > 0 else 2
+
+def convex_hull(points):
+    """Compute the convex hull of a set of 2D points using the Gift Wrapping algorithm."""
+    n = len(points)
+    if n < 3:
+        return points
+    
+    # Find the leftmost point
+    l = min(range(n), key=lambda i: points[i][0])
+    hull = []
+    
+    p = l
+    while True:
+        hull.append(points[p])
+        q = (p + 1) % n
+        for r in range(n):
+            if orientation(points[p], points[q], points[r]) == 2:
+                q = r
+        p = q
+        if p == l:
+            break
+    
+    return hull
+
+# Test case
+points = [(1, 1), (4, 6), (8, 1), (0, 0), (3, 3)]
+hull = convex_hull(points)
+print("Convex Hull:", hull)
