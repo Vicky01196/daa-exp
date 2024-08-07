@@ -1,0 +1,36 @@
+import itertools
+
+def total_value(items, values):
+    """Calculate the total value of the selected items."""
+    return sum(values[i] for i in items)
+
+def is_feasible(items, weights, capacity):
+    """Check if the total weight of selected items is within the knapsack capacity."""
+    total_weight = sum(weights[i] for i in items)
+    return total_weight <= capacity
+
+def knapsack_problem(weights, values, capacity):
+    """Solve the 0-1 Knapsack Problem using exhaustive search."""
+    n = len(weights)
+    best_value = 0
+    best_combination = []
+
+    # Generate all possible combinations of items
+    for r in range(n + 1):
+        for combination in itertools.combinations(range(n), r):
+            if is_feasible(combination, weights, capacity):
+                current_value = total_value(combination, values)
+                if current_value > best_value:
+                    best_value = current_value
+                    best_combination = combination
+
+    return best_value, best_combination
+
+# Test case
+weights = [2, 3, 4, 5]
+values = [3, 4, 5, 6]
+capacity = 5
+
+best_value, best_combination = knapsack_problem(weights, values, capacity)
+print("Maximum value:", best_value)
+print("Best combination of items:", best_combination)
