@@ -1,0 +1,23 @@
+def findKthMissing(arr, k):
+    missing_count = 0  # Number of missing positive integers found
+    current = 1        # Start checking from 1
+    index = 0          # Index to track the current position in the array
+
+    # Loop until we find the kth missing positive integer
+    while True:
+        # If we have exhausted the array or the current number is not in the array
+        if index >= len(arr) or arr[index] > current:
+            missing_count += 1
+            # If we have found the kth missing positive integer, return it
+            if missing_count == k:
+                return current
+        else:
+            # Move to the next element in the array
+            index += 1
+        
+        # Move to the next positive integer
+        current += 1
+
+# Test cases
+print(findKthMissing([2, 3, 4, 7, 11], 5))  # Output: 9
+print(findKthMissing([1, 2, 3, 4], 2))      # Output: 6
